@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from cloudinary.models import CloudinaryField
 
 class Recipe(models.Model):
 
     user=models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     Rname=models.CharField(max_length=120, unique=True)
     description=models.TextField()
-    Rimage=models.ImageField(upload_to="RecipeImages")
+    Rimage=CloudinaryField('image', folder='recipe_images/')
     Recipe_view_count= models.IntegerField(default=1)
 
 

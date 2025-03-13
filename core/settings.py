@@ -16,11 +16,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: don't run with debug turned on in production!
 
 # -------------|
-DEBUG = True #|
+DEBUG = 'DEVELOPMENT' in os.environ 
 # -----------|
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '.vercel.app']
+# CSRF settings for Vercel
+CSRF_TRUSTED_ORIGINS = ['https://*.vercel.app']
 # Application definition
 
 INSTALLED_APPS = [
@@ -34,11 +35,25 @@ INSTALLED_APPS = [
 EXTERNAL_APPS = [
     'home',
     'FlavorFrame',
+    'cloudinary',
+    'cloudinary_storage',
 ]
 INSTALLED_APPS += EXTERNAL_APPS 
 
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET')
+}
+
+# Configure Django to use Cloudinary for media files
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage' #prodtime
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', # whitenoise added at the time of production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -46,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'core.urls'
 
