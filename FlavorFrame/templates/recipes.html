@@ -1,80 +1,340 @@
 {% extends 'base.html' %}
 {% block BASE %}
 
-<nav class="navbar bg-body-tertiary shadow">
-  <div class="container-fluid">
-    <a class="navbar-brand">Navbar</a>
-    <form class="d-flex" role="search">
-      <a href="/logout/" class="btn btn-outline-primary" type="submit">
-        Logout
-        </a>
-        </form>
+<style>
+  /* Global Styles */
+  body {
+    background-color: #f8f9fa;
+    color: #343a40;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .navbar {
+    background-color: #ffffff !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05) !important;
+  }
+  
+  .navbar-brand {
+    font-weight: 600;
+    color: #343a40;
+    font-size: 1.4rem;
+  }
+  
+  /* Card Styles */
+  .recipe-card {
+    transition: all 0.3s ease;
+    border-radius: 15px;
+    overflow: hidden;
+    border: none;
+    background-color: white;
+  }
+  
+  .recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.12) !important;
+  }
+  
+  .card-img-container {
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .recipe-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .recipe-card:hover .recipe-image {
+    transform: scale(1.08);
+  }
+  
+  .card-title {
+    font-weight: 600;
+    color: #2c3e50;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .description {
+    color: #6c757d;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .card-footer {
+    padding-top: 0;
+    background-color: transparent;
+  }
+  
+  /* Button Styles */
+  .btn-custom {
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: none;
+  }
+  
+  .btn-custom-primary {
+    background-color: #4361ee;
+    color: white;
+  }
+  
+  .btn-custom-primary:hover {
+    background-color: #3a56d4;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+  }
+  
+  .btn-custom-success {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  .btn-custom-success:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(46, 204, 113, 0.3);
+  }
+  
+  .btn-custom-danger {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  .btn-custom-danger:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+  }
+  
+  .btn-action {
+    border-radius: 50px;
+    padding: 0.4rem 1rem;
+    font-size: 0.85rem;
+    transition: all 0.25s;
+  }
+  
+  .btn-edit {
+    color: #2ecc71;
+    border: 1px solid #2ecc71;
+    background-color: rgba(46, 204, 113, 0.1);
+  }
+  
+  .btn-edit:hover {
+    background-color: #2ecc71;
+    color: white;
+  }
+  
+  .btn-delete {
+    color: #e74c3c;
+    border: 1px solid #e74c3c;
+    background-color: rgba(231, 76, 60, 0.1);
+  }
+  
+  .btn-delete:hover {
+    background-color: #e74c3c;
+    color: white;
+  }
+  
+  /* Form Styles */
+  .form-container {
+    background-color: white;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+  
+  .form-header {
+    background-color: #4361ee;
+    color: white;
+    padding: 1.5rem;
+    font-weight: 600;
+    border-radius: 15px 15px 0 0;
+  }
+  
+  .form-control {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    transition: all 0.3s;
+  }
+  
+  .form-control:focus {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+  }
+  
+  .form-label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Search Form */
+  .search-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .input-group {
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-radius: 50px;
+    overflow: hidden;
+  }
+  
+  .search-input {
+    border: none;
+    padding: 15px 20px;
+    border-radius: 50px 0 0 50px;
+    font-size: 16px;
+  }
+  
+  .search-input:focus {
+    box-shadow: none;
+    outline: none;
+  }
+  
+  .search-btn {
+    background-color: #4361ee;
+    color: white;
+    border: none;
+    border-radius: 0 50px 50px 0;
+    padding: 0 25px;
+    transition: all 0.2s;
+  }
+  
+  .search-btn:hover {
+    background-color: #3a56d4;
+  }
+  /* Section Title */
+  .section-title {
+    font-weight: 700;
+    color: #343a40;
+    margin-bottom: 1.5rem;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    width: 50px;
+    height: 4px;
+    background-color: #4361ee;
+    border-radius: 2px;
+  }
+</style>
+
+<!-- Modern Navbar -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">FlavorFrame</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="/logout/" class="btn btn-custom btn-custom-primary">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </nav>
 
-    <div class="container mt-5">
-        <form class="col-6 mx-auto card p-3 shadow-lg"  method="post" enctype="multipart/form-data">
-            {%csrf_token%}
-            <h2>Add Recipe</h2>
-            <hr>
-            <div class="mb-3" >
-              <label class="form-label">Recipe Name</label>
-              <input type="text" name="Rname" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-              <label  class="form-label">Recipe Description</label>
-              <textarea name="description" class="form-control" required placeholder="Write your recipe here..."></textarea>
-            </div>
-            <div class="mb-3" >
-                <label class="form-label">Recipe Image</label>
-                <input type="file" name="Rimage" class="form-control">
-              </div>
-            <button type="submit" id="submit" class="btn btn-success">Add Recipe</button>
-          </form>
-
-          <br>
-          <div class="mt-4 col-8 mx-auto card p-2 shadow-lg">
-            <form action="">
-            <label class="form-label">Search Recipe</label>
-            <div class="mb-3 d-flex flex-row" >
-              <input type="text" name="search" class="form-control" >
-              <button id="search" class="btn btn-primary ">Search</button>
-            </div>
-          </form>
-          </div>          
-          <br>
-          <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Recipe Name</th>
-                  <th scope="col">Recipe Description</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Action</th>
-
-                </tr>
-              </thead>
-
-              <tbody>
-                {% for i in Recipes %}
-                <tr>
-                  <th scope="row">{{ forloop.counter }}</th>
-                  <td>{{i.Rname}}</td>
-                  <td>{{i.description}}</td>
-                  <td>
-                   <img src="/media/{{i.Rimage}}" style="height: 100px;">
-                  </td>
-                  <td>
-                    <a href='/delete-recipe/{{i.id}}/' class="btn btn-danger mt-3">Delete</a>
-                    <a href='/update-recipe/{{i.id}}/' class="btn btn-success mt-3">Update</a>
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            
-          </table>
+<div class="container py-5">
+  <!-- Search Bar -->
+  <!-- Improved Search Bar -->
+<div class="search-container mt-4 mb-5">
+  <form action="" class="d-flex">
+    <div class="input-group">
+      <input type="text" name="search" class="form-control search-input" placeholder="Search recipes...">
+      <button id="search" class="btn search-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+        </svg>
+      </button>
+    </div>
+  </form>
+</div>
+  <div class="row mt-4">
+    <!-- Left Column - Recipe Form -->
+    <div class="col-lg-4 mb-4">
+      <div class="form-container shadow-sm">
+        <div class="form-header">
+          <h4 class="m-0">Create New Recipe</h4>
+        </div>
+        <form class="p-4" method="post" enctype="multipart/form-data">
+          {%csrf_token%}
+          <div class="mb-3">
+            <label class="form-label">Recipe Name</label>
+            <input type="text" name="Rname" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Recipe Description</label>
+            <textarea name="description" class="form-control" rows="4" required placeholder="Write your recipe here..."></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Recipe Image</label>
+            <input type="file" name="Rimage" class="form-control">
+          </div>
+          <button type="submit" id="submit" class="btn btn-custom btn-custom-success w-100">
+            <i class="bi bi-plus-circle me-1"></i> Add Recipe
+          </button>
+        </form>
+      </div>
     </div>
     
+    <!-- Right Column - Recipe Cards -->
+    <div class="col-lg-8">
+      <h3 class="section-title">Your Recipes</h3>
+      
+      <div class="row" id="recipe-cards">
+        {% for i in Recipes %}
+        <div class="col-md-6 col-xl-4 mb-4">
+          <div class="card recipe-card h-100 shadow-sm">
+            <div class="card-img-container">
+              <img src="{{i.Rimage.url}}" class="card-img-top recipe-image" alt="{{i.Rname}}">
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{i.Rname}}</h5>
+              <p class="card-text description">{{i.description}}</p>
+            </div>
+            <div class="card-footer border-top-0">
+              <div class="d-flex justify-content-between">
+                <a href='/update-recipe/{{i.id}}/' class="btn btn-action btn-edit">Edit</a>
+                <a href='/delete-recipe/{{i.id}}/' class="btn btn-action btn-delete">Delete</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+      <!-- Empty State -->
+      {% if not Recipes %}
+      <div class="text-center py-5">
+        <div class="mb-3">
+          <i class="bi bi-journal-text" style="font-size: 3rem; color: #dee2e6;"></i>
+        </div>
+        <h4>No recipes yet</h4>
+        <p class="text-muted">Add your first recipe to get started!</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
 
 {%endblock%}
