@@ -1,2 +1,0 @@
-Number of recipes to delete: 0
-Recipes to delete: <QuerySet []>
