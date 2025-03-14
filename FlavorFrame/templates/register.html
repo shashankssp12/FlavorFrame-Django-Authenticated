@@ -1,37 +1,68 @@
-{% extends 'base.html'%}
-{% block BASE%}
+{% extends 'base.html' %}
+{% block BASE %}
 
-    <form class="col-4 mx-auto card p-3 mt-5 shadow-lg"  method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        <h3>Register</h3>
-        {% if messages %}
-        <div class="alert alert-primary" role="alert">
-        <ul class="messages">
-         {% for message in messages %}
-            {{ message }}
-           {% endfor %}
-        </ul>
-      </div>
-     {% endif %}
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">First Name</label>
-              <input type="text" required class="form-control" name="first_name" aria-describedby="emailHelp">
-
-              <label for="exampleInputEmail1" class="form-label">Last Name</label>
-              <input type="text" class="form-control" required name="last_name" aria-describedby="emailHelp">
-
-              
-              <label for="exampleInputEmail1" class="form-label">Username</label>
-              <input type="text" class="form-control" required name="username" aria-describedby="emailHelp">
-              
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" required class="form-control" name="password" id="exampleInputPassword1">
-            </div>
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Create Your Account</h2>
+            <p class="text-center text-muted mb-4">Join FlavorFrame and start organizing your recipes</p>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <br>
-            <p>Already have an account?-<a href="/login/">Login</a></p>
-          
-      </form>
-      {%endblock%}
+            <!-- Messages -->
+            {% if messages %}
+            <div class="alert alert-primary" role="alert">
+                <ul class="messages mb-0">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input type="text" id="first_name" name="first_name" class="form-control" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input type="text" id="last_name" name="last_name" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="form-text">Password should be at least 8 characters long</div>
+                </div>
+                
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary py-2">Create Account</button>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p>Already have an account? <a href="/login/" class="text-decoration-none">Sign in</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

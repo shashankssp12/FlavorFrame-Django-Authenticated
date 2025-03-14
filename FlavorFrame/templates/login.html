@@ -1,36 +1,56 @@
-{% extends 'base.html'%}
-{% block BASE%}
-  
+{% extends 'base.html' %}
+{% block BASE %}
 
-
-    <form class="col-4 mx-auto mt-5 card p-5 shadow-lg"  method="post" enctype="multipart/form-data">
-        {%csrf_token%}
-        <h3>Login</h3>
-        
-            <!-- checks if any messages is yes then on redirect it shows messages -->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Welcome Back</h2>
+            <p class="text-center text-muted mb-4">Log in to access your recipe collection</p>
+            
+            <!-- Messages -->
             {% if messages %}
             <div class="alert alert-primary" role="alert">
-            <ul class="messages">
-            {% for message in messages %}
-            {{ message }}
-            {% endfor %}
-            </ul>
+                <ul class="messages mb-0">
+                    {% for message in messages %}
+                    <li>{{ message }}</li>
+                    {% endfor %}
+                </ul>
             </div>
             {% endif %}
-
-            <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Username</label>
-              <input type="text" name="username" class="form-control" placeholder="Username">
-              
-            <div class="mb-3">
-              <label for="exampleInputPassword1" class="form-label">Password</label>
-              <input type="password" name="password" class="form-control" placeholder="Password" id="exampleInputPassword1">
-            </div>
             
-            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-            <br>
-            <p>Don't have an account-<a href="/register/">Register</a></p>
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <div class="mb-4">
+                    <label for="username" class="form-label">Username</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light">
+                            <i class="bi bi-person"></i>
+                        </span>
+                        <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-light">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    </div>
+                </div>
+                
+                <div class="d-grid">
+                    <button type="submit" name="submit" class="btn btn-primary py-2">Sign In</button>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p>Don't have an account? <a href="/register/" class="text-decoration-none">Create one now</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-          
-      </form>
-      {%endblock%}
+{% endblock %}

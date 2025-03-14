@@ -15,27 +15,8 @@ from django.http import HttpResponse
 #                         """)
 
 def home(request):
-    people=[
-        {'name': 'shashank','age':23},
-        {'name': 'charu','age':13} ,
-        {'name': 'tashu','age':22},
-        {'name': 'Barbie','age':13}
-    ]
-    text=""" Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat eligendi commodi quod quisquam. Dignissimos nulla doloremque, doloribus temporibus corporis magnam eaque deleniti magni suscipit. Maxime quos necessitatibus inventore facilis vero enim"""
-    vegetable=['Potato','Tomato','Ginger','Eggplant']
+   
+    return render(request,'index.html',context={'page':'Home'})
 
-    #     print(people)
-    print(people)
-    str="nitis"
-    print(str[::-1])
-    return render(request,'index.html',context={'page':'Home','people': people,'text':text, 'vegetable':vegetable})
-
-def contact(request):
-    context= {'page':'Contact'}
-    return render(request,'contact.html',context)
-
-def about(request):
-    context= {'page':'About'}
-    return render(request, 'about.html',context)
 
 

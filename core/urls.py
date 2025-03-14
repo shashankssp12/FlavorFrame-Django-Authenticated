@@ -28,9 +28,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # -----------------HOME (default)-----------------
     path('', home , name='home'),
-    path('about/',about , name='about'),
-    path('contact/',contact, name='contact'),
-    
+
     # -----------------FLAVORFRAME-----------------
     path('register/' ,register , name='register'),
     path('login/' ,login_page, name='login_page'),
