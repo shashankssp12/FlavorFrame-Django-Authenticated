@@ -84,17 +84,16 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-if 'VERCEL' in os.environ:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME'),
-            'USER': os.environ.get('DB_USER'),
-            'PASSWORD': os.environ.get('DB_PASSWORD'),
-            'HOST': os.environ.get('DB_HOST'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'recipes_surx',
+        'USER': 'recipes_surx_user',
+        'PASSWORD': 'KxcF5zvTwbGg9E5COy7V1TzYXRo0wrGI',
+        'HOST': 'dpg-cva26b3tq21c73bq5n10-a.oregon-postgres.render.com',
+        'PORT': '5432',
     }
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
