@@ -2,8 +2,7 @@
 
 Welcome to FlavorFrame, a recipe management application I built using Django! This project allows users to create, manage, and organize their favorite recipes with ease. I wanted to create a platform where users could store recipes digitally with images and access them from anywhere. FlavorFrame provides a simple yet effective way to build your own personal cookbook.
 
-[![FlavorFrame Demo](https://flavorframe.vercel.app/)](readmeImages/CompFlavorframe.gif)
-
+[![FlavorFrame Demo](readmeImages/CompFlavorframe.gif)](https://flavorframe.vercel.app/)
 ## 🛠️ Tech Stack
 
 | Technology | Name |
